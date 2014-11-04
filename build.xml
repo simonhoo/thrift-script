@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="Step.04.Generate.JAR" basedir=".">
+
+	<!-- ========== 步骤1、主要的系统环境属性 =========== -->
+	<!-- 取系统的环境变量 -->
+	<property environment="env" />
+	<property name="java.home" value="${env.JAVA_HOME}" />
+	<property name="ant.home" value="${env.ANT_HOME}" />
+
+	<!-- 主要的app环境属性 -->
+	<property name="app.jar" value="com.cottsoft.thrift.rpc.jar" />
+
+	<!-- app中的src属性 -->
+	<property name="src.dir" value="${basedir}" />
+	<property name="gen.java" value="gen-java" />
+	
+	<!-- app用到的lib -->
+	<property name="lib.dir" value="./libs/" />
+	
+	<!-- app的build目录中 -->
+	<property name="classes.dir" value="classes" />
+	<property name="rpc.dir" value="rpc" />
+	
+
+	
+	<!-- 定义一个全局的classpath提供给其他在javac或java时使用 -->
+	<path id="classpath">
+		<pathelement location="${classes.dir}" />
+		<pathelement path="${java.home}/lib/tools.jar" />
+		<fileset dir="${lib.dir}" id="lib.path">
+	   		<include name="**/*.jar"/>
+	    </fileset>
+	</path>
+	
+	
+	<!-- ========= 步骤2、任务 -->
+	<!-- - - - - - - - - - - - - - -->
+	<!--  target: init             -->
+	<!-- - - - - - - - - - - - - - -->
+	<target name="Step.01.Init" description="初始化：清理以前的目录并准备目录环境">
+		<!-- 清除以前的目录 -->
+		<delete dir="${classes.dir}" failonerror="false" />
+		
+		<delete dir="${gen.java}" failonerror="false" />
+
+		<!-- 准备目录 -->
+		<mkdir dir="${gen.java}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${rpc.dir}" />
+				
+		<echo level="info">初始化目录环境完成。</echo>
+	</target>
+
+	
+	<target name="Step.02.Generate.thrift.code" depends="Step.01.Init" description="-> 生成Thrift代码">
+		<exec executable="cmd" failonerror="true">
+			<arg value="/c" />
+			<arg value="thrift-0.9.1.exe" />
+			<arg value="--gen" />
+			<arg value="java" />
+			<arg value="idl/*.thrift" />
+		</exec>
+		<echo level="info">Thrift代码生成完成。</echo>
+	</target>
+	
+	<!-- - - - - - - - - - - - - - -->
+	<!--  target: build            -->
+	<!-- - - - - - - - - - - - - - -->	
+	<target name="Step.03.Build.Current.Application" depends="Step.02.Generate.thrift.code" description="-> 编译当前项目源代码">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" deprecation="off" debug="off" encoding="UTF-8" includeAntRuntime="false" >		
+			<classpath refid="classpath" />
+		</javac>
+		<echo level="info">编译当前应用模块完成。</echo>
+	</target>
+
+	
+	<!-- - - - - - - - - - - - - - -->
+	<!--  target: jars             -->
+	<!-- - - - - - - - - - - - - - -->
+	<target name="Step.04.Generate.JAR" depends="Step.03.Build.Current.Application" description="-> 应用程序打包：包名是应用程序名称.jar">
+		<jar basedir="${classes.dir}" jarfile="${rpc.dir}/${app.jar}" />
+		<delete dir="${classes.dir}" failonerror="true" />
+		<echo level="info">生成jar文件完成。</echo>
+	</target>
+		
+</project>
