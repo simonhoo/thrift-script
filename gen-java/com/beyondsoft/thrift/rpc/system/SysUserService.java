@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-package com.cottsoft.thrift.rpc;
+package com.beyondsoft.thrift.rpc.system;
 
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 public class SysUserService {
 
-  public interface Iface {
+  public interface Iface extends com.beyondsoft.thrift.rpc.common.CommonService.Iface {
 
     public SysUser getSysUser(String id) throws org.apache.thrift.TException;
 
@@ -42,7 +42,7 @@ public class SysUserService {
 
   }
 
-  public interface AsyncIface {
+  public interface AsyncIface extends com.beyondsoft.thrift.rpc.common.CommonService .AsyncIface {
 
     public void getSysUser(String id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -50,7 +50,7 @@ public class SysUserService {
 
   }
 
-  public static class Client extends org.apache.thrift.TServiceClient implements Iface {
+  public static class Client extends com.beyondsoft.thrift.rpc.common.CommonService.Client implements Iface {
     public static class Factory implements org.apache.thrift.TServiceClientFactory<Client> {
       public Factory() {}
       public Client getClient(org.apache.thrift.protocol.TProtocol prot) {
@@ -118,7 +118,7 @@ public class SysUserService {
     }
 
   }
-  public static class AsyncClient extends org.apache.thrift.async.TAsyncClient implements AsyncIface {
+  public static class AsyncClient extends com.beyondsoft.thrift.rpc.common.CommonService.AsyncClient implements AsyncIface {
     public static class Factory implements org.apache.thrift.async.TAsyncClientFactory<AsyncClient> {
       private org.apache.thrift.async.TAsyncClientManager clientManager;
       private org.apache.thrift.protocol.TProtocolFactory protocolFactory;
@@ -204,7 +204,7 @@ public class SysUserService {
 
   }
 
-  public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
+  public static class Processor<I extends Iface> extends com.beyondsoft.thrift.rpc.common.CommonService.Processor<I> implements org.apache.thrift.TProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(Processor.class.getName());
     public Processor(I iface) {
       super(iface, getProcessMap(new HashMap<String, org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>>()));
@@ -262,7 +262,7 @@ public class SysUserService {
 
   }
 
-  public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
+  public static class AsyncProcessor<I extends AsyncIface> extends com.beyondsoft.thrift.rpc.common.CommonService.AsyncProcessor<I> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncProcessor.class.getName());
     public AsyncProcessor(I iface) {
       super(iface, getProcessMap(new HashMap<String, org.apache.thrift.AsyncProcessFunction<I, ? extends org.apache.thrift.TBase, ?>>()));
