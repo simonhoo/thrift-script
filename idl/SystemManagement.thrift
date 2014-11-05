@@ -1,7 +1,7 @@
 include "CommonStruct.thrift"
 include "CommonService.thrift"
 
-namespace java com.beyondsoft.thrift.rpc.system
+namespace java com.cottsoft.thrift.rpc.system
 struct SysUser {
         1: string id;
         2: string create_time;

@@ -1,4 +1,4 @@
-namespace java com.beyondsoft.thrift.rpc.common
+namespace java com.cottsoft.thrift.rpc.common
 
 struct CommonStruct {
   1: i32 key

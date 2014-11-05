@@ -1,4 +1,4 @@
-namespace java com.beyondsoft.thrift.rpc.user
+namespace java com.cottsoft.thrift.rpc.user
 
 struct UserRole {
         1: string id;
